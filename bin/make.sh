@@ -176,7 +176,18 @@ fi
 RANDOMSEED=$(tr -dc 'a-f0-9' < /dev/urandom | head -c 16)
 echo "RANDOMSEED=0x$RANDOMSEED" >> config
 
-./magiskboot cpio ramdisk.cpio "add 0750 $INIT magiskinit" "mkdir 0750 overlay.d" "mkdir 0750 overlay.d/sbin" "$SKIP32 add 0644 overlay.d/sbin/magisk32.xz magisk32.xz" "$SKIP64 add 0644 overlay.d/sbin/magisk64.xz magisk64.xz" "add 0644 overlay.d/sbin/stub.xz stub.xz" "patch" "backup ramdisk.cpio.orig" "mkdir 000 .backup" "add 000 .backup/.magisk config" || abort "! Unable to patch ramdisk"
+./magiskboot cpio ramdisk.cpio \
+"add 0750 $INIT magiskinit" \
+"mkdir 0750 overlay.d" \
+"mkdir 0750 overlay.d/sbin" \
+"$SKIP32 add 0644 overlay.d/sbin/magisk32.xz magisk32.xz" \
+"$SKIP64 add 0644 overlay.d/sbin/magisk64.xz magisk64.xz" \
+"add 0644 overlay.d/sbin/stub.xz stub.xz" \
+"patch" \
+"backup ramdisk.cpio.orig" \
+"mkdir 000 .backup" \
+"add 000 .backup/.magisk config" \
+|| abort "! Unable to patch ramdisk"
 
 rm -f ramdisk.cpio.orig config magisk*.xz stub.xz
 
